@@ -1,0 +1,47 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_moonwalk_v14_finetune
+  - _self_
+
+project_name: HoloMotionK1MoonwalkLowerBodyTeacher
+num_envs: 64
+# Separate child experiment; never overwrite/resume the active baseline run.
+checkpoint: logs/HoloMotionK1MoonwalkV14Finetune/20261021_092605-motion_tracking_booster_k1_moonwalk_v14_finetune/model_1000.pt
+
+moonwalk_teacher_path: data/holomotion_k1_v1/moonwalk_lower_body_teacher_v56_v1/teacher.npz
+
+robot:
+  motion:
+    dataloader:
+      num_workers: 0
+      timeout: 0
+
+rewards:
+  # Auxiliary, not a replacement for v14 tracking or stability. The source
+  # teacher used phase-varying friction; the student's physics stay unchanged.
+  moonwalk_teacher_leg_tracking:
+    weight: 0.6
+    params:
+      teacher_path: ${moonwalk_teacher_path}
+      std: 0.20
+  moonwalk_teacher_sole_tracking:
+    weight: 0.6
+    params:
+      teacher_path: ${moonwalk_teacher_path}
+      xy_scale: 0.06
+      z_scale: 0.02
+  moonwalk_teacher_slide_mechanism:
+    weight: 0.5
+    params:
+      teacher_path: ${moonwalk_teacher_path}
+      sensor_name: contact_forces
+      velocity_scale: 0.20
+      window_steps: 8
+
+algo:
+  config:
+    num_learning_iterations: 500
+    save_interval: 100
+    actor_learning_rate: 2.0e-6
+    critic_learning_rate: 1.0e-5

@@ -1,0 +1,92 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_lafan_walk_dance_joint_reward_small
+  - _self_
+
+project_name: HoloMotionK1MoonwalkV14Finetune
+num_envs: 512
+checkpoint: logs/HoloMotionK1SequentialCurriculum/overnight_20261020_153041_Bl3s1P/stage_3_complex/model_11999.pt
+
+# Explicit specialist branch: this v14 reference was held out of the general run.
+# Raw source SHA256: c84ea117cbcac6b143a5e28489d1915fb5b2620b93fea47f0d1b340bab345d55
+train_hdf5_roots:
+  - data/holomotion_k1_v1/filtered_robot/moonwalk_v14
+# The same synthetic loop is a training diagnostic, NOT independent validation.
+# Evaluate general-skill retention separately on the frozen curriculum holdouts.
+val_hdf5_roots:
+  - data/holomotion_k1_v1/filtered_robot/moonwalk_v14
+
+robot:
+  motion:
+    handpicked_motion_names:
+      - moonwalk_alex61_64_v14_synthetic
+    excluded_motion_names: null
+    max_frame_length: 500
+    min_frame_length: 50
+
+# Toe/heel landmarks measured in the same official K1 foot-link frames.
+# From official_k1_foot_mesh_sites.json in the Moon-walk project.
+# These are measurement points; they do not modify contact geometry.
+moonwalk_foot_sites:
+  foot_names: [left_ankle_roll_link, right_ankle_roll_link]
+  toe_offsets:
+    - [0.08672072738409042, 0.0010306332260370255, -0.038234006613492966]
+    - [0.08672072738409042, -0.0010306332260370255, -0.038234006613492966]
+  heel_offsets:
+    - [-0.06461569666862488, 0.0010306332260370255, -0.038234006613492966]
+    - [-0.06461569666862488, -0.0010306332260370255, -0.038234006613492966]
+
+rewards:
+  # Sliding is intended. A blanket contact-foot no-slip penalty conflicts with it.
+  feet_slide:
+    weight: 0.0
+
+  moonwalk_sole_pose_tracking:
+    weight: 2.0
+    params:
+      foot_names: ${moonwalk_foot_sites.foot_names}
+      toe_offsets: ${moonwalk_foot_sites.toe_offsets}
+      heel_offsets: ${moonwalk_foot_sites.heel_offsets}
+      xy_scale: 0.06
+      z_scale: 0.015
+
+  moonwalk_sole_velocity_tracking:
+    weight: 1.5
+    params:
+      foot_names: ${moonwalk_foot_sites.foot_names}
+      toe_offsets: ${moonwalk_foot_sites.toe_offsets}
+      heel_offsets: ${moonwalk_foot_sites.heel_offsets}
+      scale: 0.3
+
+  moonwalk_heel_contact_tracking:
+    weight: 1.0
+    params:
+      foot_names: ${moonwalk_foot_sites.foot_names}
+      toe_offsets: ${moonwalk_foot_sites.toe_offsets}
+      heel_offsets: ${moonwalk_foot_sites.heel_offsets}
+      sensor_cfg:
+        _target_: isaaclab.managers.scene_entity_cfg.SceneEntityCfg
+        name: contact_forces
+        body_names: [left_ankle_roll_link, right_ankle_roll_link]
+        preserve_order: true
+      lift_scale: 0.015
+      toe_scale: 0.015
+      contact_height: 0.025
+      force_threshold: 5.0
+      force_temperature: 2.0
+
+algo:
+  config:
+    sampling_strategy: uniform
+    checkpoint_load_mode: finetune
+    finetune_continue_iteration: false
+    num_learning_iterations: 3000
+    save_interval: 500
+    schedule: fixed
+    actor_learning_rate: 3.0e-6
+    critic_learning_rate: 1.0e-5
+    override_sigma: true
+    sigma_override: 0.2
+    fix_sigma: true
+    entropy_coef: 0.0

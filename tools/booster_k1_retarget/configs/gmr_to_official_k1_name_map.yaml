@@ -1,0 +1,31 @@
+schema: k1-gmr-to-official-v1
+status: runtime_names_verified__reference_semantics_and_physics_pending
+source_gmr_to_official_urdf:
+  AAHead_yaw: aahead_yaw_joint
+  Head_pitch: aahead_pitch_joint
+  ALeft_Shoulder_Pitch: aaleft_shoulder_pitch_joint
+  Left_Shoulder_Roll: left_shoulder_roll_joint
+  Left_Elbow_Pitch: left_elbow_pitch_joint
+  Left_Elbow_Yaw: left_elbow_yaw_joint
+  ARight_Shoulder_Pitch: aaright_shoulder_pitch_joint
+  Right_Shoulder_Roll: right_shoulder_roll_joint
+  Right_Elbow_Pitch: right_elbow_pitch_joint
+  Right_Elbow_Yaw: right_elbow_yaw_joint
+  Left_Hip_Pitch: left_hip_pitch_joint
+  Left_Hip_Roll: left_hip_roll_joint
+  Left_Hip_Yaw: left_hip_yaw_joint
+  Left_Knee_Pitch: left_knee_pitch_joint
+  Left_Ankle_Pitch: left_ankle_pitch_joint
+  Left_Ankle_Roll: left_ankle_roll_joint
+  Right_Hip_Pitch: right_hip_pitch_joint
+  Right_Hip_Roll: right_hip_roll_joint
+  Right_Hip_Yaw: right_hip_yaw_joint
+  Right_Knee_Pitch: right_knee_pitch_joint
+  Right_Ankle_Pitch: right_ankle_pitch_joint
+  Right_Ankle_Roll: right_ankle_roll_joint
+official_runtime_name_source: "Isaac Lab URDF conversion, recorded in official_k1_runtime_binding_gate.json"
+official_foot_collision:
+  left_link: left_ankle_roll_link
+  right_link: right_ankle_roll_link
+  geometry: mesh
+  status: "mesh collision; provisional GMR toe/heel boxes are invalid for official FK Gate"

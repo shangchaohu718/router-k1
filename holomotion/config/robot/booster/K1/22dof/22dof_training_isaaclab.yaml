@@ -1,0 +1,448 @@
+# @package _global_
+
+robot:
+  humanoid_type: booster/K1/22dof
+
+  dof_obs_size: 22
+  actions_dim: 22
+  num_bodies: 23
+  num_extend_bodies: 0
+  undesired_contacts_regrex: "^(?!left_ankle_roll_link$)(?!right_ankle_roll_link$)(?!left_elbow_yaw_link$)(?!right_elbow_yaw_link$).+$"
+  torso_name: "trunk"
+  anchor_body: "trunk"
+  root_name: "trunk"
+
+  key_bodies:
+    - "trunk"
+    - "left_hip_roll_link"
+    - "left_knee_pitch_link"
+    - "left_ankle_pitch_link"
+    - "right_hip_roll_link"
+    - "right_knee_pitch_link"
+    - "right_ankle_pitch_link"
+    - "aahead_pitch_link"
+    - "left_shoulder_roll_link"
+    - "left_elbow_pitch_link"
+    - "left_elbow_yaw_link"
+    - "right_shoulder_roll_link"
+    - "right_elbow_pitch_link"
+    - "right_elbow_yaw_link"
+
+  key_dofs:
+    - "left_knee_pitch_joint"
+    - "right_knee_pitch_joint"
+    - "left_elbow_pitch_joint"
+    - "right_elbow_pitch_joint"
+  
+  dof_names:
+    - "aahead_yaw_joint"
+    - "aahead_pitch_joint"
+    - "aaleft_shoulder_pitch_joint"
+    - "left_shoulder_roll_joint"
+    - "left_elbow_pitch_joint"
+    - "left_elbow_yaw_joint"
+    - "aaright_shoulder_pitch_joint"
+    - "right_shoulder_roll_joint"
+    - "right_elbow_pitch_joint"
+    - "right_elbow_yaw_joint"
+    - "left_hip_pitch_joint"
+    - "left_hip_roll_joint"
+    - "left_hip_yaw_joint"
+    - "left_knee_pitch_joint"
+    - "left_ankle_pitch_joint"
+    - "left_ankle_roll_joint"
+    - "right_hip_pitch_joint"
+    - "right_hip_roll_joint"
+    - "right_hip_yaw_joint"
+    - "right_knee_pitch_joint"
+    - "right_ankle_pitch_joint"
+    - "right_ankle_roll_joint"
+
+  # ========== Unified DOF Groupings ==========
+  # Main anatomical groupings for DOF
+  arm_dof_names:
+    - "aaleft_shoulder_pitch_joint"
+    - "left_shoulder_roll_joint"
+    - "left_elbow_pitch_joint"
+    - "left_elbow_yaw_joint"
+    - "aaright_shoulder_pitch_joint"
+    - "right_shoulder_roll_joint"
+    - "right_elbow_pitch_joint"
+    - "right_elbow_yaw_joint"
+
+  head_dof_names:
+    - "aahead_yaw_joint"
+    - "aahead_pitch_joint"
+
+  waist_dof_names: []
+
+  leg_dof_names:
+    - "left_hip_pitch_joint"
+    - "left_hip_roll_joint"
+    - "left_hip_yaw_joint"
+    - "left_knee_pitch_joint"
+    - "left_ankle_pitch_joint"
+    - "left_ankle_roll_joint"
+    - "right_hip_pitch_joint"
+    - "right_hip_roll_joint"
+    - "right_hip_yaw_joint"
+    - "right_knee_pitch_joint"
+    - "right_ankle_pitch_joint"
+    - "right_ankle_roll_joint"
+
+  # Side-specific groupings for DOF
+  left_arm_dof_names:
+    - "aaleft_shoulder_pitch_joint"
+    - "left_shoulder_roll_joint"
+    - "left_elbow_pitch_joint"
+    - "left_elbow_yaw_joint"
+
+  right_arm_dof_names:
+    - "aaright_shoulder_pitch_joint"
+    - "right_shoulder_roll_joint"
+    - "right_elbow_pitch_joint"
+    - "right_elbow_yaw_joint"
+
+  left_leg_dof_names:
+    - "left_hip_pitch_joint"
+    - "left_hip_roll_joint"
+    - "left_hip_yaw_joint"
+    - "left_knee_pitch_joint"
+    - "left_ankle_pitch_joint"
+    - "left_ankle_roll_joint"
+
+  right_leg_dof_names:
+    - "right_hip_pitch_joint"
+    - "right_hip_roll_joint"
+    - "right_hip_yaw_joint"
+    - "right_knee_pitch_joint"
+    - "right_ankle_pitch_joint"
+    - "right_ankle_roll_joint"
+
+  # Combined groupings
+  upper_body_dof_names:
+    - "aahead_yaw_joint"
+    - "aahead_pitch_joint"
+    - "aaleft_shoulder_pitch_joint"
+    - "left_shoulder_roll_joint"
+    - "left_elbow_pitch_joint"
+    - "left_elbow_yaw_joint"
+    - "aaright_shoulder_pitch_joint"
+    - "right_shoulder_roll_joint"
+    - "right_elbow_pitch_joint"
+    - "right_elbow_yaw_joint"
+
+  lower_body_dof_names: ${robot.leg_dof_names}
+
+    # ========== Unified Body Groupings ==========
+  # Main anatomical groupings for bodies
+  arm_body_names:
+    - "aaleft_shoulder_pitch_link"
+    - "left_shoulder_roll_link"
+    - "left_elbow_pitch_link"
+    - "left_elbow_yaw_link"
+    - "aaright_shoulder_pitch_link"
+    - "right_shoulder_roll_link"
+    - "right_elbow_pitch_link"
+    - "right_elbow_yaw_link"
+
+  head_body_names:
+    - "aahead_yaw_link"
+    - "aahead_pitch_link"
+
+  head_hand_bodies:
+    - "aahead_pitch_link"
+    - "left_elbow_yaw_link"
+    - "right_elbow_yaw_link"
+
+  torso_body_names:
+    - "trunk"
+
+  leg_body_names:
+    - "left_hip_pitch_link"
+    - "left_hip_roll_link"
+    - "left_hip_yaw_link"
+    - "left_knee_pitch_link"
+    - "left_ankle_pitch_link"
+    - "left_ankle_roll_link"
+    - "right_hip_pitch_link"
+    - "right_hip_roll_link"
+    - "right_hip_yaw_link"
+    - "right_knee_pitch_link"
+    - "right_ankle_pitch_link"
+    - "right_ankle_roll_link"
+
+  # Side-specific groupings for bodies
+  left_arm_body_names:
+    - "aaleft_shoulder_pitch_link"
+    - "left_shoulder_roll_link"
+    - "left_elbow_pitch_link"
+    - "left_elbow_yaw_link"
+
+  right_arm_body_names:
+    - "aaright_shoulder_pitch_link"
+    - "right_shoulder_roll_link"
+    - "right_elbow_pitch_link"
+    - "right_elbow_yaw_link"
+
+  left_leg_body_names:
+    - "left_hip_pitch_link"
+    - "left_hip_roll_link"
+    - "left_hip_yaw_link"
+    - "left_knee_pitch_link"
+    - "left_ankle_pitch_link"
+    - "left_ankle_roll_link"
+
+  right_leg_body_names:
+    - "right_hip_pitch_link"
+    - "right_hip_roll_link"
+    - "right_hip_yaw_link"
+    - "right_knee_pitch_link"
+    - "right_ankle_pitch_link"
+    - "right_ankle_roll_link"
+
+  body_names:
+    - "trunk"
+    - "aahead_yaw_link"
+    - "aahead_pitch_link"
+    - "aaleft_shoulder_pitch_link"
+    - "left_shoulder_roll_link"
+    - "left_elbow_pitch_link"
+    - "left_elbow_yaw_link"
+    - "aaright_shoulder_pitch_link"
+    - "right_shoulder_roll_link"
+    - "right_elbow_pitch_link"
+    - "right_elbow_yaw_link"
+    - "left_hip_pitch_link"
+    - "left_hip_roll_link"
+    - "left_hip_yaw_link"
+    - "left_knee_pitch_link"
+    - "left_ankle_pitch_link"
+    - "left_ankle_roll_link"
+    - "right_hip_pitch_link"
+    - "right_hip_roll_link"
+    - "right_hip_yaw_link"
+    - "right_knee_pitch_link"
+    - "right_ankle_pitch_link"
+    - "right_ankle_roll_link"
+  
+  init_state:
+    pos: [0.0, 0.0, 0.57]
+    rot: [0.0, 0.0, 0.0, 1.0]
+    lin_vel: [0.0, 0.0, 0.0]
+    ang_vel: [0.0, 0.0, 0.0]
+
+    default_joint_angles:
+      aahead_yaw_joint: 0.0
+      aahead_pitch_joint: 0.0
+
+      aaleft_shoulder_pitch_joint: 0.0
+      left_shoulder_roll_joint: -1.3
+      left_elbow_pitch_joint: 0.0
+      left_elbow_yaw_joint: 0.0
+
+      aaright_shoulder_pitch_joint: 0.0
+      right_shoulder_roll_joint: 1.3
+      right_elbow_pitch_joint: 0.0
+      right_elbow_yaw_joint: 0.0
+
+      left_hip_pitch_joint: 0.0
+      left_hip_roll_joint: 0.0
+      left_hip_yaw_joint: 0.0
+      left_knee_pitch_joint: 0.0
+      left_ankle_pitch_joint: 0.0
+      left_ankle_roll_joint: 0.0
+
+      right_hip_pitch_joint: 0.0
+      right_hip_roll_joint: 0.0
+      right_hip_yaw_joint: 0.0
+      right_knee_pitch_joint: 0.0
+      right_ankle_pitch_joint: 0.0
+      right_ankle_roll_joint: 0.0
+
+  actuators:
+    actuator_type: implicit
+
+    all_joints:
+      joint_names_expr:
+        - "aahead_.*_joint"
+        - ".*_shoulder_pitch_joint"
+        - ".*_shoulder_roll_joint"
+        - ".*_elbow_pitch_joint"
+        - ".*_elbow_yaw_joint"
+        - ".*_hip_pitch_joint"
+        - ".*_hip_roll_joint"
+        - ".*_hip_yaw_joint"
+        - ".*_knee_pitch_joint"
+        - ".*_ankle_pitch_joint"
+        - ".*_ankle_roll_joint"
+
+      effort_limit_sim:
+        "aahead_.*_joint": 6.0
+        ".*_shoulder_pitch_joint": 14.0
+        ".*_shoulder_roll_joint": 14.0
+        ".*_elbow_pitch_joint": 14.0
+        ".*_elbow_yaw_joint": 14.0
+        ".*_hip_pitch_joint": 68.0
+        ".*_hip_roll_joint": 76.0
+        ".*_hip_yaw_joint": 38.3
+        ".*_knee_pitch_joint": 112.0
+        ".*_ankle_pitch_joint": 38.3
+        ".*_ankle_roll_joint": 38.3
+
+      velocity_limit_sim:
+        "aahead_.*_joint": 7.85
+        ".*_shoulder_pitch_joint": 33.51
+        ".*_shoulder_roll_joint": 33.51
+        ".*_elbow_pitch_joint": 33.51
+        ".*_elbow_yaw_joint": 33.51
+        ".*_hip_pitch_joint": 14.66
+        ".*_hip_roll_joint": 12.57
+        ".*_hip_yaw_joint": 17.59
+        ".*_knee_pitch_joint": 12.57
+        ".*_ankle_pitch_joint": 17.59
+        ".*_ankle_roll_joint": 17.59
+
+      stiffness:
+        "aahead_.*_joint": 3.94784176
+        ".*_shoulder_pitch_joint": 3.94784176
+        ".*_shoulder_roll_joint": 3.94784176
+        ".*_elbow_pitch_joint": 3.94784176
+        ".*_elbow_yaw_joint": 3.94784176
+        ".*_hip_pitch_joint": 30.20098947
+        ".*_hip_roll_joint": 21.44796105
+        ".*_hip_yaw_joint": 17.84601339
+        ".*_knee_pitch_joint": 60.40197893
+        ".*_ankle_pitch_joint": 35.69202678
+        ".*_ankle_roll_joint": 35.69202678
+
+      damping:
+        "aahead_.*_joint": 0.25132741
+        ".*_shoulder_pitch_joint": 0.25132741
+        ".*_shoulder_roll_joint": 0.25132741
+        ".*_elbow_pitch_joint": 0.25132741
+        ".*_elbow_yaw_joint": 0.25132741
+        ".*_hip_pitch_joint": 3.60497757
+        ".*_hip_roll_joint": 2.56016176
+        ".*_hip_yaw_joint": 2.13021093
+        ".*_knee_pitch_joint": 4.80663676
+        ".*_ankle_pitch_joint": 4.26042187
+        ".*_ankle_roll_joint": 4.26042187
+
+      armature:
+        "aahead_.*_joint": 0.001
+        ".*_shoulder_pitch_joint": 0.001
+        ".*_shoulder_roll_joint": 0.001
+        ".*_elbow_pitch_joint": 0.001
+        ".*_elbow_yaw_joint": 0.001
+        ".*_hip_pitch_joint": 0.0478125
+        ".*_hip_roll_joint": 0.0339552
+        ".*_hip_yaw_joint": 0.0282528
+        ".*_knee_pitch_joint": 0.095625
+        ".*_ankle_pitch_joint": 0.0565056
+        ".*_ankle_roll_joint": 0.0565056
+
+    action_scale:
+      "aahead_.*_joint": 0.37995444
+      ".*_shoulder_pitch_joint": 0.88656036
+      ".*_shoulder_roll_joint": 0.88656036
+      ".*_elbow_pitch_joint": 0.88656036
+      ".*_elbow_yaw_joint": 0.88656036
+      ".*_hip_pitch_joint": 0.56289546
+      ".*_hip_roll_joint": 0.88586509
+      ".*_hip_yaw_joint": 0.53653440
+      ".*_knee_pitch_joint": 0.46356097
+      ".*_ankle_pitch_joint": 0.26826720
+      ".*_ankle_roll_joint": 0.26826720
+  
+  dof_sign_by_name:
+    aahead_yaw_joint: -1.0
+    aahead_pitch_joint: 1.0
+
+    aaleft_shoulder_pitch_joint: 1.0
+    left_shoulder_roll_joint: -1.0
+    left_elbow_pitch_joint: 1.0
+    left_elbow_yaw_joint: -1.0
+
+    aaright_shoulder_pitch_joint: 1.0
+    right_shoulder_roll_joint: -1.0
+    right_elbow_pitch_joint: 1.0
+    right_elbow_yaw_joint: -1.0
+
+    left_hip_pitch_joint: 1.0
+    left_hip_roll_joint: -1.0
+    left_hip_yaw_joint: -1.0
+    left_knee_pitch_joint: 1.0
+    left_ankle_pitch_joint: 1.0
+    left_ankle_roll_joint: -1.0
+
+    right_hip_pitch_joint: 1.0
+    right_hip_roll_joint: -1.0
+    right_hip_yaw_joint: -1.0
+    right_knee_pitch_joint: 1.0
+    right_ankle_pitch_joint: 1.0
+    right_ankle_roll_joint: -1.0
+
+  asset:
+    collapse_fixed_joints: True
+    replace_cylinder_with_capsule: False
+    flip_visual_attachments: False
+    max_angular_velocity: 1000.0
+    max_linear_velocity: 1000.0
+    density: 0.001
+    angular_damping: 0.0
+    linear_damping: 0.0
+
+    asset_root: "./"
+    urdf_file: "assets/robots/booster_k1/K1_22dof.urdf"
+    assetFileName: "assets/robots/booster_k1/K1_22dof.xml"
+    fix_base_link: false
+    force_usd_conversion: true
+
+  extend_config: []
+
+  motion:
+    asset:
+      assetRoot: "./"
+      assetFileName: "assets/robots/booster_k1/K1_22dof.xml"
+
+    sampling_strategy: ${algo.config.sampling_strategy}
+    weighted_bin: ${algo.config.weighted_bin}
+    curriculum: ${algo.config.curriculum}
+    dump_sampled_motion_keys: false
+    dump_sampled_motion_keys_interval: 1
+    dump_sampled_motion_keys_dir: "sampled_motion_cache_keys"
+
+    max_frame_length: 300 # 6s
+    min_frame_length: 50 # 1s
+    handpicked_motion_names: null
+    excluded_motion_names: null
+
+    world_frame_normalization: true
+
+    backend: "hdf5_v2" # hdf5, hdf5_v2
+    train_hdf5_roots: ${train_hdf5_roots}
+    val_hdf5_roots: ${val_hdf5_roots}
+
+    dof_names: ${robot.dof_names}
+    body_names: ${robot.body_names}
+    key_bodies: ${robot.key_bodies}
+
+    extend_config: ${robot.extend_config}
+
+    dataloader:
+      num_workers: 2
+      prefetch_factor: 1
+      pin_memory: true
+      persistent_workers: false
+      timeout: 600
+
+    fk_robot_file_path: ${robot.asset.urdf_file}
+
+    cache:
+      batch_progress_bar: false
+      max_num_clips: ${num_envs} # Batch size for motion clips
+      device: "cuda" # "cuda" or "cpu"; cuda stages on GPU
+      swap_interval_steps: ${robot.motion.max_frame_length} # Swap cache every N steps
+      allowed_prefixes:
+        - "ref_"

@@ -1,0 +1,66 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_lafan_dance_original_rewards
+  - _self_
+
+project_name: HoloMotionBoosterK1LaFANWalkDanceJointRewardSmall
+
+# Joint walk+dance pool: 10 training walks and 7 training dances.  Subject5
+# entries are validation-only because they are absent from the training HDF5.
+robot:
+  motion:
+    handpicked_motion_names:
+      - walk1_subject1
+      - walk1_subject2
+      - walk2_subject1
+      - walk2_subject3
+      - walk2_subject4
+      - walk3_subject1
+      - walk3_subject2
+      - walk3_subject3
+      - walk3_subject4
+      - walk4_subject1
+      - dance1_subject1
+      - dance1_subject2
+      - dance1_subject3
+      - dance2_subject1
+      - dance2_subject2
+      - dance2_subject3
+      - dance2_subject4
+      - walk1_subject5
+      - walk3_subject5
+      - dance1_subject5
+      - dance2_subject5
+
+# The 8-expert, d_model=256 checkpoint already contains stable walking and
+# dance tracking.  Fine-tuning isolates the effect of the new reward without
+# paying to relearn basic balance from random initialization.
+checkpoint: logs/HoloMotionBoosterK1LaFANDanceOriginalRewards/20261014_174753-motion_tracking_booster_k1_lafan_dance_original_rewards/model_18000.pt
+
+rewards:
+  # Stock HoloMotion tracks body poses and reward points, but does not enable
+  # its available direct joint-angle reward.  Add a moderate all-DoF term to
+  # discourage the policy from suppressing knee, ankle, and arm amplitudes.
+  key_dof_position_tracking_exp:
+    weight: 2.0
+    params:
+      std: 1.0
+      key_dofs: ${robot.dof_names}
+      ref_prefix: ${rewards._config.reward_prefix}
+
+  # The stock value (-0.1) contributes roughly -1.2 to -1.35 per episode in
+  # the current dance policy and can make small, slow actions locally optimal.
+  # Halve it rather than disabling it so abrupt high-frequency actions remain
+  # discouraged while the new joint reward can recover motion amplitude.
+  action_rate_l2:
+    weight: -0.05
+    params: {}
+
+algo:
+  config:
+    checkpoint_load_mode: finetune
+    finetune_continue_iteration: false
+    num_learning_iterations: 10000
+    actor_learning_rate: 1.0e-5
+    critic_learning_rate: 3.0e-5

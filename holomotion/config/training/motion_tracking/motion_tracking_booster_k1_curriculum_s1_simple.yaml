@@ -1,0 +1,101 @@
+# @package _global_
+
+# Sequential curriculum. Later-stage actions are excluded by exact key allowlist.
+# Keep the small network and previous reward; no optimizer-state resume.
+defaults:
+  - motion_tracking_booster_k1_lafan_walk_dance_joint_reward_small
+  - _self_
+
+project_name: HoloMotionK1SequentialCurriculum
+num_envs: 512
+checkpoint: logs/HoloMotionBoosterK1LaFANWalkDanceJointRewardSmall/20261016_092811-motion_tracking_booster_k1_lafan_walk_dance_joint_reward_small/model_19999.pt
+
+train_hdf5_roots:
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0026
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0037
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0154
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0348
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0407
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0468
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/01_basic/train/partition_0638
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/02_locomotion/train/partition_0408
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/02_locomotion/train/partition_0621
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/02_locomotion/train/partition_0635
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/02_locomotion/train/partition_0679
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/train/partition_0000
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/train/partition_0802
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/train/partition_0811
+
+val_hdf5_roots:
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/val/partition_0009
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/val/partition_0125
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/val/partition_0252
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/val/partition_0527
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/val/partition_0815
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/03_dynamic/val/partition_1254
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0016
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0096
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0169
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0295
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0296
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0819
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0825
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_0952
+  - data/holomotion_k1_v1/organized_targeted_repaired_v1/04_coordination/val/partition_1038
+
+robot:
+  motion:
+    excluded_motion_names: null
+    handpicked_motion_names:
+      - "113_21__df8f1ea4c1"
+      - "132_07__98392fd3c0"
+      - "132_08__4314a5f667"
+      - "132_10__10bb99e545"
+      - "132_11__3d7510d8e8"
+      - "132_12__975bdca5eb"
+      - "132_14__4a5384b4a0"
+      - "132_45__4b9e455c39"
+      - "132_47__6514879845"
+      - "132_48__6c4406d25c"
+      - "132_49__ebb58779c5"
+      - "132_50__d05ec4378a"
+      - "140_06__1d721280df"
+      - "140_07__ee37970c62"
+      - "74_01__cab4c596e4"
+      - "74_20__42d2a0a745"
+      - "76_10__d1d8f52f8c"
+      - "77_02__771d337779"
+      - "83_66__b67fd65393"
+      - "Akimbo_ID__0b2e192269"
+      - "ArmsBySide_ID__be2256613b"
+      - "Neutral_ID__59a98e1989"
+      - "walk1_subject1"
+      - "walk2_subject4"
+      - "walk3_subject1__frames_20_5065"
+      - "walk3_subject4__frames_20_9777"
+      - "walk4_subject1"
+      - "walk3_subject5"
+      - "LeanRight_BW__5ede7b0867"
+      - "LeanRight_SW__f06c251f02"
+      - "WalkingStickLeft_FW__aeeb9f8d6f"
+      - "27_01__b0a8d0e203"
+      - "aiming2_subject5__frames_14471_15286"
+      - "27_02__975fe7a5c5__frames_482_1485"
+      - "gHO_sBM_cAll_d20_mHO5_ch07"
+      - "gJS_sBM_cAll_d01_mJS3_ch05"
+      - "GracefulArms_FR__f11ed67bc8"
+      - "OnToesCrouched_TR1__1207d53717"
+      - "09_06__ae87a0d544"
+      - "09_07__ed091ef553"
+      - "dance2_subject5__frames_10226_11284"
+      - "pushAndStumble1_subject5__frames_8602_8964"
+      - "gJB_sBM_cAll_d07_mJB3_ch02__frames_285_437"
+      - "WhirlArms_TR2__1877b155a5__frames_20_951"
+
+algo:
+  config:
+    sampling_strategy: uniform
+    num_learning_iterations: 3000
+    save_interval: 1000
+    checkpoint_load_mode: finetune
+    finetune_continue_iteration: false

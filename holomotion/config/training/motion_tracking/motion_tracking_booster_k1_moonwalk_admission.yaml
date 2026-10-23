@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_moonwalk_task_isolated
+  - _self_
+
+project_name: HoloMotionK1MoonwalkAdmission
+
+# Prepared only; no training or simulation has been launched for this revision.
+# A single full environment batch preserves the sampling GEMM layout in PPO.
+algo:
+  config:
+    num_mini_batches: 1
+    rollout_forward_chunk_size: 0
+
+modules:
+  actor:
+    internal_expansion:
+      sequence_replay: cached
+      replay_chunk_size: 0
+      admission:
+        # Forced open only for the fixed sliding Stage A. This is not an
+        # automatically calibrated policy. Closed/learned are evaluation or
+        # Stage B profiles; Stage B uses labeled old/new reference histories.
+        mode: open
+        threshold: 0.99
+        initial_bias: -8.0

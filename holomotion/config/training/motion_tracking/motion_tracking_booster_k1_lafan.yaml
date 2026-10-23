@@ -1,0 +1,132 @@
+# @package _global_
+
+defaults:
+  - /training: train_base
+  - /algo: ppo_tf
+  - /robot: booster/K1/22dof/22dof_training_isaaclab
+  - /env: motion_tracking
+  - /env/terminations: termination_motion_tracking
+  - /env/observations: motion_tracking/obs_motion_tracking_tf-moe
+  - /env/rewards: motion_tracking/rew_motion_tracking
+  - /env/domain_randomization: domain_rand_medium
+  - /env/terrain: isaaclab_rough
+  - /modules: motion_tracking/motion_tracking_tf-moe
+  - _self_
+
+project_name: HoloMotionBoosterK1LaFAN
+
+# K1 starter network. Keep the public HoloMotion module config untouched and
+# override only this experiment. The active LaFAN baseline has 50 training
+# clips, so the universal 1024-expert actor is unnecessarily large here.
+modules:
+  actor:
+    num_fine_experts: 16
+    num_shared_experts: 1
+    top_k: 2
+    d_model: 256
+    n_heads: 4
+    n_kv_heads: 2
+    n_layers: 1
+    obs_embed_mlp_hidden: 1024
+    router_embed_mlp_hidden: 512
+
+  critic:
+    layer_config:
+      hidden_dims:
+        - 1024
+        - 1024
+        - 512
+
+train_hdf5_roots:
+  # v2 gives trunk tracking priority over infeasible limb-orientation tasks,
+  # preventing the IK solution from sacrificing balance to match the feet.
+  - root: data/lafan1_booster_k1_gmr_v2_h5_train_subject1_4
+    ratio: 1.0
+
+val_hdf5_roots:
+  - root: data/lafan1_booster_k1_gmr_v2_h5_val_subject5
+    ratio: 1.0
+
+# These clips were recorded against stairs/obstacles, while the current
+# Isaac Lab terrain does not recreate those objects. Keep them in HDF5 for a
+# future interaction benchmark, but do not sample them in the flat/rough
+# terrain baseline.
+robot:
+  motion:
+    excluded_motion_names:
+      - obstacles1_subject1
+      - obstacles1_subject2
+      - obstacles2_subject1
+      - obstacles2_subject2
+      - obstacles3_subject3
+      - obstacles3_subject4
+      - obstacles4_subject2
+      - obstacles4_subject3
+      - obstacles4_subject4
+      - obstacles5_subject2
+      - obstacles5_subject3
+      - obstacles5_subject4
+      - obstacles6_subject1
+      - obstacles6_subject4
+      - obstacles1_subject5
+      - obstacles2_subject5
+      - obstacles6_subject5
+
+# Replace G1-specific body names inherited from the shared environment,
+# rewards, domain randomization, and PPO auxiliary prediction configs.
+env:
+  config:
+    curriculum:
+      rigid_body_com_completion_rate:
+        params:
+          body_names: trunk
+
+rewards:
+  local_reward_point_body_pos_tracking_exp:
+    params:
+      reward_point_body:
+        - trunk
+        - left_elbow_yaw_link
+        - right_elbow_yaw_link
+        - left_ankle_roll_link
+        - right_ankle_roll_link
+
+domain_rand:
+  rigid_body_com:
+    params:
+      body_names: trunk
+  randomize_mass:
+    params:
+      body_names:
+        - trunk
+
+algo:
+  config:
+    save_interval: 1000
+    num_learning_iterations: 10000
+    sampling_strategy: weighted_bin
+    aux_state_pred:
+      keybody_contact_names:
+        - left_hip_pitch_link
+        - right_hip_pitch_link
+        - left_knee_pitch_link
+        - right_knee_pitch_link
+        - left_ankle_roll_link
+        - right_ankle_roll_link
+        - left_elbow_pitch_link
+        - right_elbow_pitch_link
+        - left_elbow_yaw_link
+        - right_elbow_yaw_link
+      keybody_rel_pos_names:
+        - left_knee_pitch_link
+        - right_knee_pitch_link
+        - left_ankle_roll_link
+        - right_ankle_roll_link
+        - left_elbow_yaw_link
+        - right_elbow_yaw_link
+
+# K1 does not yet have the HoloMotion MuJoCo sim-to-sim wrapper used by G1.
+# Keep periodic MuJoCo evaluation off until that wrapper is adapted.
+mujoco_eval:
+  enabled: false
+  robot_xml_path: assets/robots/booster_k1/K1_22dof.xml

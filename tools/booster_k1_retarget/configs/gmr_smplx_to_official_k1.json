@@ -1,0 +1,348 @@
+{
+  "robot_root_name": "trunk",
+  "human_root_name": "pelvis",
+  "ground_height": 0.0,
+  "human_height_assumption": 1.8,
+  "use_ik_match_table1": true,
+  "use_ik_match_table2": true,
+  "human_scale_table": {
+    "head": 0.6,
+    "pelvis": 0.6,
+    "left_hip": 0.6,
+    "right_hip": 0.6,
+    "left_knee": 0.6,
+    "right_knee": 0.6,
+    "left_foot": 0.6,
+    "right_foot": 0.6,
+    "left_shoulder": 0.6,
+    "right_shoulder": 0.6,
+    "left_elbow": 0.6,
+    "right_elbow": 0.6
+  },
+  "ik_match_table1": {
+    "right_knee_pitch_link": [
+      "right_knee",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_knee_pitch_link": [
+      "left_knee",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_hip_yaw_link": [
+      "left_hip",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "right_hip_yaw_link": [
+      "right_hip",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "trunk": [
+      "pelvis",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_elbow_yaw_link": [
+      "left_shoulder",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "right_elbow_yaw_link": [
+      "right_shoulder",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_ankle_roll_link": [
+      "left_foot",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "right_ankle_roll_link": [
+      "right_foot",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "aahead_pitch_link": [
+      "head",
+      0,
+      10,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ]
+  },
+  "ik_match_table2": {
+    "right_knee_pitch_link": [
+      "right_knee",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_knee_pitch_link": [
+      "left_knee",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_hip_yaw_link": [
+      "left_hip",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "right_hip_yaw_link": [
+      "right_hip",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "trunk": [
+      "pelvis",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_elbow_yaw_link": [
+      "left_shoulder",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "right_elbow_yaw_link": [
+      "right_shoulder",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "left_ankle_roll_link": [
+      "left_foot",
+      100,
+      50,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "right_ankle_roll_link": [
+      "right_foot",
+      100,
+      50,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ],
+    "aahead_pitch_link": [
+      "head",
+      10,
+      5,
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        -0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    ]
+  },
+  "official_asset_xml": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/upstream/booster_assets/robots/K1/K1_22dof.xml",
+  "adapter_note": "Project-local name/asset adapter only; original GMR solver and weights preserved."
+}

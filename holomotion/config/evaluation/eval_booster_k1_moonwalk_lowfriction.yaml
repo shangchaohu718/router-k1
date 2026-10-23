@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+  - /evaluation/eval_isaaclab@_global_
+  - _self_
+
+# Evaluation deliberately overrides training domain randomization. Declare the
+# same fixed foot event here too, otherwise evaluation silently restores normal
+# friction and the A/B comparison is invalid.
+domain_rand:
+  rigid_body_material:
+    mode: startup
+    params:
+      body_names: [left_ankle_roll_link, right_ankle_roll_link]
+      static_friction_range: [0.3, 0.3]
+      dynamic_friction_range: [0.15, 0.15]
+      restitution_range: [0.0, 0.0]

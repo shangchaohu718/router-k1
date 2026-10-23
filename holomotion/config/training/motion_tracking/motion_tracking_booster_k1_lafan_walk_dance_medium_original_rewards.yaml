@@ -1,0 +1,45 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_lafan_walk_medium_original_rewards
+  - _self_
+
+project_name: HoloMotionBoosterK1LaFANWalkDanceMediumOriginalRewards
+
+# Joint stage: every name that exists in the subject1-4 HDF5 contributes
+# training samples.  Subject5 names are validation-only because those clips
+# are absent from the training HDF5.
+robot:
+  motion:
+    handpicked_motion_names:
+      # Walking: 10 training clips.
+      - walk1_subject1
+      - walk1_subject2
+      - walk2_subject1
+      - walk2_subject3
+      - walk2_subject4
+      - walk3_subject1
+      - walk3_subject2
+      - walk3_subject3
+      - walk3_subject4
+      - walk4_subject1
+
+      # Dancing: 7 training clips.
+      - dance1_subject1
+      - dance1_subject2
+      - dance1_subject3
+      - dance2_subject1
+      - dance2_subject2
+      - dance2_subject3
+      - dance2_subject4
+
+      # Held-out subject5 validation clips.
+      - walk1_subject5
+      - walk3_subject5
+      - dance1_subject5
+      - dance2_subject5
+
+algo:
+  config:
+    # Train one policy from scratch on the joint walk+dance sampling pool.
+    num_learning_iterations: 30000

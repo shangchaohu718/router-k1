@@ -1,0 +1,70 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_lafan_walk_dance_joint_reward_small
+  - _self_
+
+project_name: HoloMotionK1ReleaseV1Pilot
+
+# Candidate integration test. This is NOT the final long-training release.
+# New sources enter only after producing their numerical/visual QA artifacts.
+checkpoint: logs/HoloMotionBoosterK1LaFANWalkDanceJointRewardSmall/20261016_092811-motion_tracking_booster_k1_lafan_walk_dance_joint_reward_small/model_13000.pt
+
+train_hdf5_roots:
+  - root: data/lafan1_booster_k1_gmr_v2_h5_train_subject1_4
+    ratio: 0.45
+  - root: data/holomotion_k1_v1/filtered_robot/aistpp_train
+    ratio: 0.45
+  - root: data/holomotion_k1_v1/filtered_robot/moonwalk_v14
+    ratio: 0.10
+
+val_hdf5_roots:
+  - root: data/lafan1_booster_k1_gmr_v2_h5_val_subject5
+    ratio: 0.5
+  - root: data/holomotion_k1_v1/filtered_robot/aistpp_val
+    ratio: 0.5
+
+robot:
+  motion:
+    handpicked_motion_names: null
+    # Keep unsupported obstacle scenes out; ground/get-up/contact-heavy
+    # categories are reserved for the later complex-motion validation pool.
+    excluded_motion_names:
+      # Post-conversion FK audit: feet remain >5 cm high for most frames.
+      - gJB_sBM_cAll_d07_mJB2_ch01
+      - obstacles1_subject1
+      - obstacles1_subject2
+      - obstacles2_subject1
+      - obstacles2_subject2
+      - obstacles3_subject3
+      - obstacles3_subject4
+      - obstacles4_subject2
+      - obstacles4_subject3
+      - obstacles4_subject4
+      - obstacles5_subject2
+      - obstacles5_subject3
+      - obstacles5_subject4
+      - obstacles6_subject1
+      - obstacles6_subject4
+      - obstacles1_subject5
+      - obstacles2_subject5
+      - obstacles6_subject5
+      - fallAndGetUp1_subject1
+      - fallAndGetUp1_subject4
+      - fallAndGetUp2_subject2
+      - fallAndGetUp2_subject3
+      - fallAndGetUp3_subject1
+      - fallAndGetUp1_subject5
+      - ground1_subject1
+      - ground1_subject4
+      - ground2_subject2
+      - ground2_subject3
+      - ground1_subject5
+      - pushAndFall1_subject1
+      - pushAndFall1_subject4
+
+algo:
+  config:
+    num_learning_iterations: 2
+    checkpoint_load_mode: finetune
+    finetune_continue_iteration: false

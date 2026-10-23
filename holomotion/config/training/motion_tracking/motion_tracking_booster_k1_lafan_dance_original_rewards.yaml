@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_lafan_dance_warmup
+  - _self_
+
+project_name: HoloMotionBoosterK1LaFANDanceOriginalRewards
+
+# Restore the stock HoloMotion motion-tracking objective exactly.  Robot body
+# names still come from the K1 robot config because the stock G1 link names do
+# not exist on K1.  The feet-slide term is inherited from the earlier K1 walk
+# experiment; a zero weight makes it inactive and therefore absent from the
+# effective optimization objective.
+rewards:
+  root_pos_xy_tracking_exp:
+    weight: 0.0
+    params:
+      std: 0.2
+
+  root_rot_tracking_exp:
+    weight: 0.0
+
+  root_lin_vel_tracking_rel_ratio_exp:
+    weight: 2.0
+
+  feet_slide:
+    weight: 0.0

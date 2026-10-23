@@ -1,0 +1,19 @@
+# @package _global_
+defaults:
+  - motion_tracking_booster_k1_moonwalk_teacher_aux
+  - _self_
+
+project_name: HoloMotionK1MoonwalkTeacherLowFriction
+
+# Only the two feet change. This startup event is fixed for all environments,
+# never phase-conditioned; all other inherited settings stay identical.
+# The baseline's material entry has no mode and is inactive. Explicit startup
+# activation is essential: changing its parameter values alone has no effect.
+domain_rand:
+  rigid_body_material:
+    mode: startup
+    params:
+      body_names: [left_ankle_roll_link, right_ankle_roll_link]
+      static_friction_range: [0.3, 0.3]
+      dynamic_friction_range: [0.15, 0.15]
+      restitution_range: [0.0, 0.0]

@@ -1,0 +1,44 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_lafan_walk_warmup
+  - _self_
+
+project_name: HoloMotionBoosterK1LaFANWalkMediumOriginalRewards
+
+# Medium K1 actor experiment.  Keep the previous 8-expert/256-wide configs
+# untouched so their checkpoints and results remain reproducible.
+modules:
+  actor:
+    num_fine_experts: 16
+    num_shared_experts: 1
+    top_k: 2
+    d_model: 512
+    n_heads: 8
+    n_kv_heads: 4
+    n_layers: 1
+    obs_embed_mlp_hidden: 2048
+    router_embed_mlp_hidden: 2048
+
+# Restore the effective stock HoloMotion reward objective.  K1-specific link
+# names remain inherited because the stock G1 names do not exist on K1.
+rewards:
+  root_pos_xy_tracking_exp:
+    weight: 0.0
+    params:
+      std: 0.2
+
+  root_rot_tracking_exp:
+    weight: 0.0
+
+  root_lin_vel_tracking_rel_ratio_exp:
+    weight: 2.0
+
+  feet_slide:
+    weight: 0.0
+
+algo:
+  config:
+    # This is only a short locomotion warm-up.  The long run happens in the
+    # joint walk+dance stage so capacity is not spent specializing on walking.
+    num_learning_iterations: 5000

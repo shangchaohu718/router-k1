@@ -1,0 +1,40 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_moonwalk_internal_moe
+  - _self_
+
+project_name: HoloMotionK1MoonwalkTaskIsolated
+
+algo:
+  config:
+    # Explicit bounded legacy evaluation population, saved into checkpoints.
+    # Other reference populations require a new audited registration.
+    incremental_legacy_evaluation:
+      reference_roots:
+        - test_outputs/current3998_regression_20261021/reference_subset
+      max_frame_length: 1000
+
+# CPU-prepared only. No experiment has been launched with this configuration.
+# Homogeneous on-policy Stage A; mixed tasks are deliberately rejected.
+incremental_task:
+  task: sliding
+  bootstrap_from_legacy: true
+  legacy_checkpoint_sha256: cc2a94e4549451a3291621dc4ade229bec7b082d56566c3cb01e89238ecc410b
+  legacy_critic_state_hash: 412652e5604994f6a56ead9bd94d77110b0fb47f3bda90a5f4c4a8390c03d92d
+  legacy_critic_config_hash: 7eed0ed5e331fcd7fef2ea6f309b74b07bca56712bf6894c5625ae1aaa0ed0a7
+  legacy_actor_state_hash: 4ea57a89e34bfe6e235f169d74583b9a99f44deaf0701133b600f233c1fdb908
+  legacy_actor_config_hash: a39e9cbdc26ad64c794b7b88680b5b26f7b0661976f9eb29f0cf21fe44ca5fab
+  legacy_reward_hash: a5265b1371c242052a62d92a3eaff906b3f3d8a2d71b62c7d46b5338871e2d70
+  sliding_reward_hash: e3eb3f28142e2c81f419187e9f342aa8563c9bb817508982103a9d428caa5661
+  sliding_motion_keys: [moonwalk_alex61_64_v14_synthetic]
+  timeout_semantics: finite_horizon_terminal
+
+modules:
+  critic:
+    type: FrozenLegacySlidingCritic
+    task_isolation: ${incremental_task}
+
+rewards:
+  _config:
+    incremental_task: ${incremental_task}

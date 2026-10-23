@@ -1,0 +1,53 @@
+# @package _global_
+
+defaults:
+  - motion_tracking_booster_k1_moonwalk_v14_finetune
+  - _self_
+
+project_name: HoloMotionK1MoonwalkInternalMoE
+num_envs: 8
+checkpoint: logs/HoloMotionK1SequentialCurriculum/overnight_20261020_153041_Bl3s1P/stage_3_complex/model_11999.pt
+
+modules:
+  actor:
+    type: InternalExpandedMoEPolicy
+    internal_expansion:
+      num_added_experts: 2
+      stage: A
+      mode: cooperative
+      bootstrap_from_legacy: true
+      initial_score_bias: -2.0
+      # Added scores need to leave their conservative initial bias. This
+      # multiplier applies only to the 514 new scoring parameters, including
+      # adaptive-LR updates; new FFNs retain the conservative Actor rate.
+      router_lr_multiplier: 300.0
+      # Explicit pilot warmup; normal cooperative evaluation disables this.
+      # No mutable step counter: PPO recomputation uses the identical rule.
+      warmup: true
+      warmup_margin: 0.5
+    obs_norm:
+      update_at_train: false
+      update_at_eval: false
+
+algo:
+  config:
+    checkpoint_load_mode: finetune
+    finetune_continue_iteration: false
+    override_sigma: false
+    fix_sigma: true
+    num_learning_iterations: 20
+    num_steps_per_env: 8
+    save_interval: 10
+    actor_learning_rate: 3.0e-6
+    critic_learning_rate: 1.0e-5
+    export_policy: false
+    dynamo_backend: null
+
+robot:
+  motion:
+    dataloader:
+      num_workers: 0
+      timeout: 0
+
+mujoco_eval:
+  enabled: false
